@@ -165,13 +165,3 @@ function checkTaskFromComplete(dataId) {
     dataTarget.isComplete = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
-
-function findDataIndex(dataId) {
-    for (const index in books) {
-        if (books[index].id === dataId) {
-            return index;
-        }
-    }
-
-    return -1;
-}
