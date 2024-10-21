@@ -1,0 +1,188 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+header {
+  background: #6495ed;
+  padding: 16px;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main .bookFormInput {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+main .bookFormInput h2 {
+  font-size: 24px;
+  text-align: center;
+  color: #6495ed;
+  font-weight: bold;
+}
+
+main .bookFormInput label {
+  font-weight: bold;
+  color: #6495ed;
+}
+
+main .bookFormIsComplete {
+    display: flex;
+}
+
+main .bookFormInput input {
+  display: flex;
+  height: 42px;
+  width: 750px;
+  margin-bottom: 0%;
+}
+
+main .bookFormInput .bookFormIsComplete input {
+  width: auto;
+  height: auto;
+}
+
+main .bookFormInput button {
+  background-color: #6495ed;
+  background-position: 0% 0%;
+  color: #fff;
+  height: 42px;
+  width: 700px;
+  align-items: center;
+  padding: auto;
+  display: inline-block;
+  cursor: pointer;
+}
+
+main .bookFormInput button span {
+  font-weight: bold;
+}
+
+main .search_section {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+main .search_section h2 {
+  text-align: center;
+  color: #6495ed;
+  font-weight: bold;
+}
+
+main .search_section label {
+  font-size: 16px;
+  text-align: center;
+}
+
+main .search_section input {
+  height: 35px;
+  width: 500px;
+}
+
+main .search_section button {
+  background-color: #6495ed;
+  height: 35px;
+  width: 200px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+}
+
+main .book__self {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+main .book__self h3 {
+  color: #6495ed;
+  font-size: 25px;
+}
+
+main .book__self .book_list div {
+    padding: 8px 16px 16px 16px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+main .book__self .book_list div h3 {
+    font-size: 16px;
+    color: #000;
+}
+
+main .book__self .book_list div p {
+    font-size: 10px;
+    color: #000;
+}
+
+main .book__self .book_list div button {
+    border: 0;
+    padding: 5px;
+    margin: 0 5px 0 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.green {
+    background-color: green;
+    color: #FFF;
+    padding: 10px;
+}
+
+.blue {
+    background-color: darkblue;
+    color: #FFF;
+    padding: 10px;
+}
+
+.red {
+    background-color: darkred;
+    color: #FFF;
+    padding: 10px;
+}
+
+main .book__self {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+main .book__self h3 {
+  color: #6495ed;
+  font-size: 25px;
+}
