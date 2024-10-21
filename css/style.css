@@ -171,18 +171,3 @@ main .book__self .book_list div button {
     color: #FFF;
     padding: 10px;
 }
-
-main .book__self {
-  width: 800px;
-  margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 20px;
-  border: 1px solid #000;
-  border-radius: 5px;
-}
-
-main .book__self h3 {
-  color: #6495ed;
-  font-size: 25px;
-}

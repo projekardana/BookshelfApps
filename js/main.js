@@ -13,9 +13,10 @@ function addData (){
     const bookItemTitle = document.getElementById('bookFormTitle').value;
     const bookItemAuthor = document.getElementById('bookFormAuthor').value;
     const bookItemYear = document.getElementById('bookFormYear').value;
+    const bookIsComplete = document.getElementById('bookFormisComplete').checked;
  
     const bookItem = generateId();
-    const dataObject = generateDataObject(bookItem, bookItemTitle, bookItemAuthor, bookItemYear, false);
+    const dataObject = generateDataObject(bookItem, bookItemTitle, bookItemAuthor, bookItemYear, bookIsComplete);
     books.push(dataObject);
  
     document.dispatchEvent(new Event(RENDER_EVENT));
@@ -78,22 +79,29 @@ function makeBook(dataObject) {
     const buttonEdit = document.createElement("button");
     buttonEdit.innerText = "Edit";
     buttonEdit.classList.add("blue");
+
+    const bookIsComplete = document.createElement("checkbox");
+    bookIsComplete.innerText = "checkbox";
+    bookIsComplete.classList.add('bookFormIsCompleteCheckbox');
  
     const bookItem= document.createElement('div');
     bookItem.append(textData, textAuthor, timestamp);
-    bookItem.append(checkButton, trashButton, buttonEdit)
+    bookItem.append(checkButton, trashButton, buttonEdit, bookIsComplete);
     bookItem.setAttribute('data-testid', 'bookItem');
     textData.setAttribute('data-testid', 'bookItemTitle');
     textAuthor.setAttribute('data-testid', 'bookItemAuthor');
     timestamp.setAttribute('data-testid', 'bookItemYear');
- 
-    trashButton.setAttribute('data-testid', 'bookItemIsCompleteButton');
+    bookIsComplete.setAttribute('data-testid', 'bookFormIsCompleteCheckbox');
+
     trashButton.setAttribute('data-testid', 'bookItemDeleteButton');
-    trashButton.setAttribute('data-testid', 'bookItemEditButton');
+    buttonEdit.setAttribute('data-testid', 'bookItemEditButton');
  
     if (dataObject.isComplete) {
-        const checkButton = document.createElement("checkbox");
-        checkButton.classList.add('bookItemIsCompleteButton');
+        const bookIsComplete = document.createElement("checkbox");
+        bookIsComplete.classList.add('bookFormIsCompleteCheckbox');
+
+        const checkButton = document.createElement('button');
+        checkButton.classList.add('bookItemIsCompleteButton')
  
         checkButton.addEventListener('click', function () {
             checkTaskFromComplete(dataObject.id);
@@ -108,14 +116,11 @@ function makeBook(dataObject) {
 
         bookItem.append(checkButton, trashButton);
     }else {
-        const checkbutton = document.createElement('button');
-        checkbutton.classList.add('bookItemIsCompleteButton');
-
-        checkbutton.addEventListener('click', function () {
+        checkButton.addEventListener('click', function () {
             addTaskToComplete(dataObject.id);
         });
 
-        bookItem.append(checkbutton);
+        bookItem.append(checkButton);
 
     }
     return bookItem;
@@ -142,7 +147,6 @@ function findData(dataId){
 
     return null;
 }
- 
 // Function Hapus  Data
 function removeTaskFromComplete(dataId) {
     const dataTarget = findDataIndex(dataId);
