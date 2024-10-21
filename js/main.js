@@ -82,6 +82,9 @@ function makeBook(dataObject) {
 
     const bookIsComplete = document.createElement("checkbox");
     bookIsComplete.classList.add('bookFormIsCompleteCheckbox');
+
+    const searchSubmit = document.createElement("searchSubmit");
+    searchSubmit.classList.add('searchBookFormSubmitButton');
  
     const bookItem= document.createElement('div');
     bookItem.append(textData, textAuthor, timestamp);
@@ -95,15 +98,22 @@ function makeBook(dataObject) {
 
     trashButton.setAttribute('data-testid', 'bookItemDeleteButton');
     buttonEdit.setAttribute('data-testid', 'bookItemEditButton');
+    searchSubmit.setAttribute('data-testid', 'searchBookFormSubmitButton');
+
+    const searchForm = document.getElementById('searchBook');
+    const searchInput = document.getElementById('searchBookTitle');
+    const searchResults = document.getElementById('searchResults');
+
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const searchBook = searchInput.value.toLowerCase().trim();
+        searchBooks(searchBook);
+    });
  
     if (dataObject.isComplete) {
 
         checkButton.addEventListener('click', function () {
         checkTaskFromComplete(dataObject.id);
-        });
-
-        trashButton.addEventListener('click', function () {
-            removeTaskFromComplete(dataObject.id);
         });
 
         bookItem.append(checkButton, trashButton);
@@ -115,6 +125,13 @@ function makeBook(dataObject) {
         bookItem.append(checkButton);
 
     }
+
+    trashButton.addEventListener('click', function () {
+        removeTaskFromComplete(dataObject.id);
+    });
+
+
+
     return bookItem;
 
 }
@@ -168,5 +185,22 @@ function findDataIndex(dataId) {
    
     return -1;
   }
+
+//   Fungsi Mencari Data
+function searchBook(dataId) {
+    searchResults.innerHTML = '';
+
+    const results = books.filter(book => book.title.toLowerCase().includes(dataId));
+
+    if (results > 0) {
+        results.forEach(book => {
+            const bookItem = document.createElement('searchBookForm');
+            bookItem.textContent = book.title;
+            searchResults.appendChild(bookItem);
+        });
+    } else {
+        searchResults.textContent = 'Tidak ada Data yang di temukan. ';
+    }
+}
 
 
