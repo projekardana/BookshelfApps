@@ -19,7 +19,8 @@ function addData (){
     const dataObject = generateDataObject(bookItem, bookItemTitle, bookItemAuthor, bookItemYear, bookIsComplete);
     books.push(dataObject);
  
-    document.dispatchEvent(new Event(renderEvent));
+    renderEvent(books);
+    saveData();
  
 }
  
@@ -37,9 +38,8 @@ function generateDataObject(id, title, author, timestamp, isComplete) {
     }
 }
 const books = [];
-// const RENDER_EVENT = 'render-book';
 
-function renderEvent(books=books){
+function renderEvent(books){
     const inCompleteBookList = document.getElementById('incompleteBookList');
     inCompleteBookList.innerHTML = '';
 
@@ -55,6 +55,23 @@ function renderEvent(books=books){
         }
     }
 }
+
+// Fitur Search
+
+const inputSearch = document.getElementById('searchBookTitle');
+    
+    document.getElementById('searchBook').addEventListener('click', function(event) {
+        const inputSearch = document.getElementById('searchBookTitle').value;
+        event.preventDefault();
+
+        const filteredBooks = books.filter(function(key){
+            return key.title.toUpperCase().includes(inputSearch.toUpperCase());
+        })
+
+        renderEvent(filteredBooks);
+        saveData();
+
+    });
  
 // Function Tambah Data
  
@@ -95,24 +112,28 @@ function makeBook(dataObject) {
 
     trashButton.setAttribute('data-testid', 'bookItemDeleteButton');
     buttonEdit.setAttribute('data-testid', 'bookItemEditButton');
-    searchSubmit.setAttribute('data-testid', 'searchBookFormSubmitButton');
 
     if (dataObject.isComplete) {
         checkButton.innerText = "Belum Selesai";
 
         checkButton.addEventListener('click', function () {
         checkTaskFromComplete(dataObject.id);
+
         });
+
         buttonEdit.innerText = "Simpan Data";
 
         buttonEdit.addEventListener('click', function () {
             checkTaskFromComplete(dataObject.id);
-        })
+        });
 
         bookItem.append(checkButton, trashButton);
+
     }else {
+
         checkButton.addEventListener('click', function () {
             addTaskToComplete(dataObject.id);
+
         });
 
         bookItem.append(checkButton);
@@ -123,23 +144,9 @@ function makeBook(dataObject) {
         removeTaskFromComplete(dataObject.id);
     });
 
-
-
     return bookItem;
 
 }
-
-// Fitur Search
-
-const inputSearch = document.getElementById('searchBookTitle');
-    
-    document.getElementById('searchBook').addEventListener('click', function(event) {
-        const filteredBooks = books.filter(function(key){
-            return key.title.toUpperCase().includes(inputSearch.toUpperCase());
-            renderEvent(filteredBooks);
-        })
-
-    });
 
 // Function Add Task To Complete
 function addTaskToComplete(dataId) {
@@ -148,7 +155,8 @@ function addTaskToComplete(dataId) {
     if (dataTarget == null) return;
 
     dataTarget.isComplete = true;
-    document.dispatchEvent(new Event(renderEvent));
+    renderEvent(books);
+    saveData();
 }
 
 // Function findData
@@ -168,7 +176,8 @@ function removeTaskFromComplete(dataId) {
     if (dataTarget === -1) return;
  
     books.splice(dataTarget, 1);
-    document.dispatchEvent(new Event(renderEvent));
+    renderEvent(books);
+    saveData();
 
 }
  
@@ -178,7 +187,8 @@ function checkTaskFromComplete(dataId) {
     if (dataTarget == null) return;
  
     dataTarget.isComplete = false;
-    document.dispatchEvent(new Event(renderEvent));
+    renderEvent(books);
+    saveData();
 }
 
 function findDataIndex(dataId) {
@@ -191,3 +201,27 @@ function findDataIndex(dataId) {
     return -1;
   }
 
+function saveData(){
+    if (isStorageExist()){
+        const parsed = JSON.stringify(books);
+        localStorage.setItem(STORAGE_KEY, parsed);
+        renderEvent(SAVED_EVENT);
+
+    }
+}
+
+const SAVED_EVENT = 'books';
+const STORAGE_KEY = 'Bookshelf_Apps';
+
+function isStorageExist() /** Boolean */ {
+    if (typeof (Storage) === undefined) {
+        alert("Browser Kamu Tidak dukung LocalStorage");
+        return false;
+    }
+
+    return true;
+}
+
+document.addEventListener(SAVED_EVENT, function () {
+    console.log(localStorage.getItem(STORAGE_KEY));
+});
