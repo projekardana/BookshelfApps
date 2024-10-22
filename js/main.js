@@ -3,11 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
     submitForm.addEventListener('submit', function (event) {
         event.preventDefault();
         addData();
-
+    });
         if (isStorageExist()){
             loadDataFromStorage();
         }
-    });
 });
  
 // Function Membuat addData (Menambahkan Input Data)
