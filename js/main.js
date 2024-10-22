@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
     submitForm.addEventListener('submit', function (event) {
         event.preventDefault();
         addData();
- 
+
+        if (isStorageExist()){
+            loadDataFromStorage();
+        }
     });
 });
  
@@ -205,8 +208,6 @@ function saveData(){
     if (isStorageExist()){
         const parsed = JSON.stringify(books);
         localStorage.setItem(STORAGE_KEY, parsed);
-        renderEvent(SAVED_EVENT);
-
     }
 }
 
@@ -225,3 +226,17 @@ function isStorageExist() /** Boolean */ {
 document.addEventListener(SAVED_EVENT, function () {
     console.log(localStorage.getItem(STORAGE_KEY));
 });
+
+// Fungsi Load Data 
+function loadDataFromStorage() {
+    const serializeData = localStorage.getItem(STORAGE_KEY);
+    let data = JSON.parse(serializeData);
+
+    if (data !== null) {
+        for (const book of data) {
+            books.push(book);
+        }
+    }
+
+    renderEvent(books);
+}
