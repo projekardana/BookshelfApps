@@ -69,7 +69,7 @@ function makeBook(dataObject) {
     timestamp.innerText = dataObject.year;
  
     const checkButton = document.createElement("button");
-    checkButton.innerText = "Belum Selesai dibaca";
+    checkButton.innerText = "Selesai dibaca";
     checkButton.classList.add("green");
  
     const trashButton = document.createElement("button");
@@ -82,9 +82,6 @@ function makeBook(dataObject) {
 
     const bookIsComplete = document.createElement("checkbox");
     bookIsComplete.classList.add('bookFormIsCompleteCheckbox');
-
-    const searchSubmit = document.createElement("searchSubmit");
-    searchSubmit.classList.add('searchBookFormSubmitButton');
  
     const bookItem= document.createElement('div');
     bookItem.append(textData, textAuthor, timestamp);
@@ -99,22 +96,26 @@ function makeBook(dataObject) {
     trashButton.setAttribute('data-testid', 'bookItemDeleteButton');
     buttonEdit.setAttribute('data-testid', 'bookItemEditButton');
     searchSubmit.setAttribute('data-testid', 'searchBookFormSubmitButton');
-
-    const searchForm = document.getElementById('searchBook');
-    const searchInput = document.getElementById('searchBookTitle');
-    const searchResults = document.getElementById('searchResults');
-
-    searchForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const searchBook = searchInput.value.toLowerCase().trim();
-        searchBooks(searchBook);
+    
+    document.getElementById('searchBook').addEventListener('click', function(event) {
+        const filteredBooks = books.filter(function(key){
+            return key.title.toUpperCase().includes(inputSearch.toUpperCase());
+            renderEvent(filteredBooks);
+        })
     });
- 
+
+
     if (dataObject.isComplete) {
+        checkButton.innerText = "Belum Selesai";
 
         checkButton.addEventListener('click', function () {
         checkTaskFromComplete(dataObject.id);
         });
+        buttonEdit.innerText = "Simpan Data";
+
+        buttonEdit.addEventListener('click', function () {
+            checkTaskFromComplete(dataObject.id);
+        })
 
         bookItem.append(checkButton, trashButton);
     }else {
@@ -187,19 +188,19 @@ function findDataIndex(dataId) {
   }
 
 //   Fungsi Mencari Data
-function searchBook(dataId) {
-    searchResults.innerHTML = '';
+function renderEvent(books=books) {
+    searchSubmit.innerHTML = '';
 
-    const results = books.filter(book => book.title.toLowerCase().includes(dataId));
+    const results = books.filter(book => book.title.toLowerCase().includes(term));
 
-    if (results > 0) {
+    if (results.length > 0) {
         results.forEach(book => {
-            const bookItem = document.createElement('searchBookForm');
+            const bookItem = document.createElement('div');
             bookItem.textContent = book.title;
-            searchResults.appendChild(bookItem);
+            searchSubmit.appendChild(bookItem);
         });
     } else {
-        searchResults.textContent = 'Tidak ada Data yang di temukan. ';
+        searchSubmit.textContent = 'Tidak ada Data yang di temukan.';
     }
 }
 
