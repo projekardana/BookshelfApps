@@ -37,9 +37,9 @@ function generateDataObject(id, title, author, timestamp, isComplete) {
     }
 }
 const books = [];
-const RENDER_EVENT = 'render-book';
+const renderEvent = 'render-book';
 
-document.addEventListener(RENDER_EVENT, function () {
+document.addEventListener(renderEvent, function () {
     const inCompleteBookList = document.getElementById('incompleteBookList');
     inCompleteBookList.innerHTML = '';
 
@@ -96,14 +96,6 @@ function makeBook(dataObject) {
     trashButton.setAttribute('data-testid', 'bookItemDeleteButton');
     buttonEdit.setAttribute('data-testid', 'bookItemEditButton');
     searchSubmit.setAttribute('data-testid', 'searchBookFormSubmitButton');
-    
-    document.getElementById('searchBook').addEventListener('click', function(event) {
-        const filteredBooks = books.filter(function(key){
-            return key.title.toUpperCase().includes(inputSearch.toUpperCase());
-            renderEvent(filteredBooks);
-        })
-    });
-
 
     if (dataObject.isComplete) {
         checkButton.innerText = "Belum Selesai";
@@ -136,6 +128,18 @@ function makeBook(dataObject) {
     return bookItem;
 
 }
+
+// Fitur Search
+
+const inputSearch = document.getElementById('searchBookTitle');
+    
+    document.getElementById('searchBook').addEventListener('click', function(event) {
+        const filteredBooks = books.filter(function(key){
+            return key.title.toUpperCase().includes(inputSearch.toUpperCase());
+            renderEvent(filteredBooks);
+        })
+
+    });
 
 // Function Add Task To Complete
 function addTaskToComplete(dataId) {

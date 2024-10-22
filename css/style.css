@@ -171,3 +171,16 @@ main .book__self .book_list div button {
     color: #FFF;
     padding: 10px;
 }
+
+/* Media Queries */
+
+@media screen and (max-width: 768px) {
+  header {
+    flex-direction: column;
+  }
+
+  header {
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+  }
+}
