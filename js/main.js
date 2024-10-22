@@ -19,7 +19,7 @@ function addData (){
     const dataObject = generateDataObject(bookItem, bookItemTitle, bookItemAuthor, bookItemYear, bookIsComplete);
     books.push(dataObject);
  
-    document.dispatchEvent(new Event(RENDER_EVENT));
+    document.dispatchEvent(new Event(renderEvent));
  
 }
  
@@ -37,9 +37,9 @@ function generateDataObject(id, title, author, timestamp, isComplete) {
     }
 }
 const books = [];
-const renderEvent = 'render-book';
+// const RENDER_EVENT = 'render-book';
 
-document.addEventListener(renderEvent, function () {
+function renderEvent(books=books){
     const inCompleteBookList = document.getElementById('incompleteBookList');
     inCompleteBookList.innerHTML = '';
 
@@ -54,7 +54,7 @@ document.addEventListener(renderEvent, function () {
             completeBOOKList.append(bookElement);
         }
     }
-});
+}
  
 // Function Tambah Data
  
@@ -148,7 +148,7 @@ function addTaskToComplete(dataId) {
     if (dataTarget == null) return;
 
     dataTarget.isComplete = true;
-    document.dispatchEvent(new Event(RENDER_EVENT));
+    document.dispatchEvent(new Event(renderEvent));
 }
 
 // Function findData
@@ -168,7 +168,7 @@ function removeTaskFromComplete(dataId) {
     if (dataTarget === -1) return;
  
     books.splice(dataTarget, 1);
-    document.dispatchEvent(new Event(RENDER_EVENT));
+    document.dispatchEvent(new Event(renderEvent));
 
 }
  
@@ -178,7 +178,7 @@ function checkTaskFromComplete(dataId) {
     if (dataTarget == null) return;
  
     dataTarget.isComplete = false;
-    document.dispatchEvent(new Event(RENDER_EVENT));
+    document.dispatchEvent(new Event(renderEvent));
 }
 
 function findDataIndex(dataId) {
@@ -190,22 +190,4 @@ function findDataIndex(dataId) {
    
     return -1;
   }
-
-//   Fungsi Mencari Data
-function renderEvent(books=books) {
-    searchSubmit.innerHTML = '';
-
-    const results = books.filter(book => book.title.toLowerCase().includes(term));
-
-    if (results.length > 0) {
-        results.forEach(book => {
-            const bookItem = document.createElement('div');
-            bookItem.textContent = book.title;
-            searchSubmit.appendChild(bookItem);
-        });
-    } else {
-        searchSubmit.textContent = 'Tidak ada Data yang di temukan.';
-    }
-}
-
 
